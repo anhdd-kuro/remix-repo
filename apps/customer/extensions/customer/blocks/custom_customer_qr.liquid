@@ -1,0 +1,103 @@
+<div class="custom-member-qrcode">
+  <button
+    id="qrcode-member-fetch"
+    style="background-color: #000; padding: 0.5rem; color: #fff; font-size: 1.125rem; font-weight: 700; border-radius: 0.25rem;"
+  >
+    会員証を表示
+  </button>
+  <svg
+    id="qrcode-member-loading-spinner"
+    style="animation: spin 1s linear infinite; margin-left: -0.25rem; margin-right: 0.75rem; height: 1.25rem; width: 1.25rem; color: #000; display: none;"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+  >
+    <circle style='opacity: 0.25; stroke: currentColor; stroke-width: 4;' cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+    <path style='opacity: 0.75; fill: currentColor;' fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+  </svg>
+  <canvas id="qrcode-member"></canvas>
+</div>
+
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    let isQrLoading = false;
+    const qrCode = document.getElementById('qrcode-member');
+    const qrLoadingSpinner = document.getElementById('qrcode-member-loading-spinner');
+    console.log(window.CustomerApp, 'window.CustomerApp');
+
+    function fetchToken() {
+      if (isQrLoading) return;
+      isQrLoading = true;
+
+      if (qrLoadingSpinner) {
+        qrLoadingSpinner.style.display = 'block';
+      }
+      if (!qrCode) {
+        return;
+      }
+
+      const qrResponse = fetch(window.CustomerApp.qrApiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          // qrCode = data
+          console.log(data);
+          if (data?.token && data?.customerId) {
+            window.CustomerApp.createQrCode({
+              text: data.token,
+              canvas: qrCode,
+            });
+
+            if (qrLoadingSpinner) {
+              qrLoadingSpinner.style.display = 'none';
+            }
+          }
+          isQrLoading = true;
+        })
+        .catch((error) => {
+          console.error(error);
+          isQrLoading = false;
+          if (qrLoadingSpinner) {
+            qrLoadingSpinner.style.display = 'none';
+          }
+        });
+    }
+
+    const qrButton = document.getElementById('qrcode-member-fetch');
+    if (qrButton) {
+      qrButton.addEventListener('click', () => {
+        fetchToken();
+      });
+    }
+  });
+</script>
+
+<style>
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .custom-member-qrcode {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem;
+    gap: 1rem;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "会員証発行",
+  "target": "section",
+  "settings": []
+}
+{% endschema %}

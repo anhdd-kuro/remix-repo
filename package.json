@@ -1,0 +1,19 @@
+{
+  "name": "kbc-cinema-custom-app",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "start": "turbo run start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "turbo": "^1.13.3"
+  },
+  "devDependencies": {
+  }
+}

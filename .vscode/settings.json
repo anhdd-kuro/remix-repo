@@ -1,0 +1,33 @@
+//設定を共有
+{  
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+"editor.formatOnPaste": true,
+"editor.formatOnSave": true,
+"editor.formatOnType": true,
+"editor.codeActionsOnSave": [
+  "source.organizeImports",
+  "source.fixAll.eslint"
+],
+  "shopifyLiquid.formatterDevPreview": true,
+  "[liquid]": {
+    "editor.defaultFormatter": "Shopify.theme-check-vscode",
+    "editor.formatOnSave": true,
+  },
+  "tailwindCSS.includeLanguages": {
+    "liquid": "HTML",
+  },
+  "tailwindCSS.experimental.classRegex": [
+    "[cC]lass\\s*[:=]\\s*['\"]([^'\"]+)",
+    "[cC]lass_\\s*[:=]\\s*['\"]([^'\"]+)"
+  ],
+  "tailwindCSS.classAttributes": [
+    "class",
+    "x-class",
+    ":class",
+    "class:",
+  ],
+}
+/*
+参考
+https://blog.gaji.jp/2020/08/28/4877/
+*/

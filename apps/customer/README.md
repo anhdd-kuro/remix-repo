@@ -1,0 +1,473 @@
+# 使い方法
+
+## Embed extension
+
+- Script / Styleの場所
+  - `./extensions/customer/assets`
+- Themeに埋め込む方法
+  - [Shopify Embed Extension](https://shopify.dev/docs/apps/online-store/theme-app-extensions/extensions-framework#app-embed-blocks)
+
+## Schema
+
+- 場所: `app/global/domain/customer/schema.ts`
+- 試すためのUrl
+  - [Vailbot](https://valibot.dev/playground/)
+
+## Api
+
+### Register
+
+#### Url
+
+`POST /apps/custom-customer/app/api/customer/register`
+
+#### Return
+
+- Success
+
+```json
+{
+  "id": "string",
+  "message": "string"
+}
+```
+
+- Error
+
+```json
+{
+  "errors": [string]
+}
+```
+
+#### Example
+
+```html
+<form id="user-register" method="post">
+  <label for="Email">Email *</label>
+  <input
+    type="email"
+    name="email"
+    id="Email"
+    placeholder="example@info.co.jp"
+    autocapitalize="off"
+    required
+    autocomplete="on"
+  >
+
+  <label for="phone">Phone *</label>
+  <input type="text" name="phone" id="phone" placeholder="0123456789" required autocomplete="on">
+
+  <label for="CreatePassword">Password *</label>
+  <input type="password" name="password" id="password" required autocomplete="current-password" minlength="8">
+
+  <label for="CreatePassword">Password Confirm *</label>
+  <input
+    type="password"
+    name="password_confirmation"
+    id="password_confirmation"
+    required
+    autocomplete="current-password"
+  >
+
+  <label for="LastName">Last Name *</label>
+  <input type="text" name="last_name" id="lastName" placeholder="山田" required autocomplete="on">
+
+  <label for="FirstName">First Name *</label>
+  <input type="text" name="first_name" id="firstName" placeholder="太郎" autofocus required autocomplete="on">
+
+  <label for="birthday" class="label">Date of Birth *</label>
+  <input type="date" name="date_of_birth" id="birthday" required autocomplete="on">
+
+  <div class="field-radio">
+    <label for="gender" class="label">Gender *</label>
+    <label><input type="radio" value="男性" name="gender" id="gender_male" required>男性</label>
+    <label><input type="radio" value="女性" name="gender" id="gender_female" required>女性</label>
+    <label><input type="radio" value="未回答" name="gender" id="gender_null" required>未回答</label>
+  </div>
+
+  <div class="field-radio">
+    <p>DM Settings</p>
+    <label><input type="checkbox" value="true" name="accept_email_marketing" checked id="dm_setting_on">受け取る</label>
+  </div>
+
+  <button type="submit">登録</button>
+</form>
+
+<p id="result"></p>
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const form = document.getElementById('user-register');
+    console.log(form);
+    const CustomerApp = window.CustomerApp;
+    console.log(CustomerApp);
+    if (!CustomerApp) return;
+
+    const CustomerRegisterSchema = CustomerApp.CustomerRegisterFormSchema;
+    const safeParseSchema = CustomerApp.safeParseSchema;
+    console.log(CustomerRegisterSchema.entries, 'CustomerRegisterSchema.entries');
+
+    const createErrorElm = (inputName) => {
+      const errorElm = document.createElement('p');
+      errorElm.setAttribute('aria-invalid', 'true');
+      errorElm.setAttribute('role', 'alert');
+      errorElm.setAttribute('id', `${inputName}-error`);
+      errorElm.style.color = 'red';
+      return errorElm;
+    };
+
+    const inputs = form.querySelectorAll('input');
+    for (const input of inputs) {
+      input.addEventListener('blur', (e) => {
+        const target = e.target;
+        const name = target.name;
+        const value = target.value;
+        const entrySchema = CustomerRegisterSchema.entries[name];
+        if (!entrySchema) return;
+
+        const parseResult = safeParseSchema(entrySchema, value);
+        let errorElm = document.getElementById(`${name}-error`);
+        if (!parseResult.success) {
+          console.error(parseResult.issues);
+
+          if (!errorElm) {
+            errorElm = createErrorElm(name);
+          }
+          errorElm.innerHTML = parseResult.issues.map((i) => i.message).join('<br>');
+          target.parentNode.insertBefore(errorElm, target.nextSibling);
+        } else {
+          errorElm?.remove();
+        }
+      });
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const dataValues = Object.fromEntries(data.entries());
+      console.log(dataValues, 'dataValues');
+      const validateResult = CustomerApp.safeParseSchema(CustomerRegisterSchema, dataValues);
+      if (!validateResult.success) {
+        console.error(validateResult.issues);
+        for (const issue of validateResult.issues) {
+          const { path, message } = issue;
+          const name = path[0].key;
+          let errorElm = document.getElementById(`${name}-error`);
+          if (!errorElm) {
+            errorElm = createErrorElm(name);
+          }
+          errorElm.innerHTML = message;
+          const input = form.querySelector(`[name=${name}]`);
+          input?.parentNode.insertBefore(errorElm, input.nextSibling);
+        }
+
+        return;
+      }
+      fetch('/apps/custom-customer-dev/app/api/customer/register', {
+        method: 'POST',
+        body: data,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          document.getElementById('result').innerHTML = JSON.stringify(data);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    });
+  });
+</script>
+
+<style>
+  form {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+  }
+
+  input:is([type='text'], [type='email'], [type='password'], [type='date']) {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  .field-radio {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    column-gap: 10px;
+  }
+
+  .field-radio label {
+    display: flex;
+    margin-bottom: 0px;
+    align-items: center;
+    font-weight: normal;
+    color: #555;
+  }
+
+  button {
+    padding: 12px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: #0056b3;
+  }
+</style>
+```
+
+### Update
+
+#### Update Api Url
+
+`PUT /apps/custom-customer/app/api/customer/update`
+
+#### Update Api Return
+
+- Success
+
+```json
+{
+  "id": "string",
+  "message": "string"
+}
+```
+
+- Error
+
+```json
+{
+  "error": "string"
+}
+```
+
+#### Update Form Example
+
+```html
+<form id="user-update" method="put">
+  <input type="hidden" name="id" value="{{ customer.id }}">
+  <label for="Email">Email *</label>
+  <input
+    type="email"
+    name="email"
+    id="Email"
+    placeholder="example@info.co.jp"
+    autocapitalize="off"
+    required
+    autocomplete="on"
+    value="{{ customer.email }}"
+  >
+
+  <label for="phone">Phone *</label>
+  <input
+    type="text"
+    name="phone"
+    id="phone"
+    placeholder="0123456789"
+    required
+    autocomplete="on"
+    value="{{ customer.phone }}"
+  >
+
+  <label for="LastName">Last Name *</label>
+  <input
+    type="text"
+    name="last_name"
+    id="lastName"
+    placeholder="山田"
+    required
+    autocomplete="on"
+    value="{{ customer.last_name }}"
+  >
+
+  <label for="FirstName">First Name *</label>
+  <input
+    type="text"
+    name="first_name"
+    id="firstName"
+    placeholder="太郎"
+    autofocus
+    required
+    autocomplete="on"
+    value="{{ customer.first_name }}"
+  >
+
+  <label for="birthday" class="label">Date of Birth *</label>
+  <input
+    type="date"
+    name="date_of_birth"
+    id="birthday"
+    required
+    autocomplete="on"
+    value="{{ customer.metafields.custom.date_of_birth |  date: "%Y-%m-%d" }}"
+  >
+
+  <div class="field-radio">
+    <label for="gender" class="label">Gender *</label>
+    <label
+      ><input
+        type="radio"
+        value="男性"
+        name="gender"
+        id="gender_male"
+        required
+        {% if customer.metafields.custom.gender == '男性' %}
+          checked
+        {% endif %}
+      >
+      男性
+    </label>
+    <label
+      ><input
+        type="radio"
+        value="女性"
+        name="gender"
+        id="gender_female"
+        required
+        {% if customer.metafields.custom.gender == '女性' %}
+          checked
+        {% endif %}
+      >
+      女性
+    </label>
+    <label
+      ><input
+        type="radio"
+        value="未回答"
+        name="gender"
+        id="gender_null"
+        required
+        {% if customer.metafields.custom.gender == '未回答' %}
+          checked
+        {% endif %}
+      >
+      未回答
+    </label>
+  </div>
+
+  <div class="field-radio">
+    <p>DM Settings</p>
+    <label
+      ><input
+        type="checkbox"
+        value="true"
+        name="accept_email_marketing"
+        id="dm_setting_on"
+        {% if customer.accepts_marketing %}
+          checked
+        {% endif %}
+      >
+      受け取る
+    </label>
+  </div>
+
+  <button type="submit">更新</button>
+</form>
+
+<p id="result"></p>
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const form = document.getElementById('user-update');
+    console.log(form);
+    const CustomerApp = window.CustomerApp;
+    console.log(CustomerApp);
+    if (!CustomerApp) return;
+
+    const CustomerUpdateFormRequiredSchema = CustomerApp.CustomerUpdateFormRequiredSchema;
+    const safeParseSchema = CustomerApp.safeParseSchema;
+    console.log(CustomerUpdateFormRequiredSchema.entries, 'CustomerUpdateFormRequiredSchema.entries');
+
+    const createErrorElm = (inputName) => {
+      const errorElm = document.createElement('p');
+      errorElm.setAttribute('aria-invalid', 'true');
+      errorElm.setAttribute('role', 'alert');
+      errorElm.setAttribute('id', `${inputName}-error`);
+      errorElm.style.color = 'red';
+      return errorElm;
+    };
+
+    const inputs = form.querySelectorAll('input');
+    for (const input of inputs) {
+      input.addEventListener('blur', (e) => {
+        const target = e.target;
+        const name = target.name;
+        const value = target.value;
+        const entrySchema = CustomerUpdateFormRequiredSchema.entries[name];
+        if (!entrySchema) return;
+
+        const parseResult = safeParseSchema(entrySchema, value);
+        let errorElm = document.getElementById(`${name}-error`);
+        if (!parseResult.success) {
+          console.error(parseResult.issues);
+
+          if (!errorElm) {
+            errorElm = createErrorElm(name);
+          }
+          errorElm.innerHTML = parseResult.issues.map((i) => i.message).join('<br>');
+          target.parentNode.insertBefore(errorElm, target.nextSibling);
+        } else {
+          errorElm?.remove();
+        }
+      });
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const dataValues = Object.fromEntries(data.entries());
+      console.log(dataValues, 'dataValues');
+      const validateResult = CustomerApp.safeParseSchema(CustomerUpdateFormRequiredSchema, dataValues);
+      if (!validateResult.success) {
+        console.error(validateResult.issues);
+        for (const issue of validateResult.issues) {
+          const { path, message } = issue;
+          const name = path[0].key;
+          let errorElm = document.getElementById(`${name}-error`);
+          if (!errorElm) {
+            errorElm = createErrorElm(name);
+          }
+          errorElm.innerHTML = message;
+          const input = form.querySelector(`[name=${name}]`);
+          input?.parentNode.insertBefore(errorElm, input.nextSibling);
+        }
+
+        return;
+      }
+      fetch('/apps/custom-customer-dev/app/api/customer/update', {
+        method: 'put',
+        body: data,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          document.getElementById('result').innerHTML = JSON.stringify(data);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    });
+  });
+</script>
+```

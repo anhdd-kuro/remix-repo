@@ -1,0 +1,13 @@
+node_modules
+build
+public/build
+shopify-app-remix
+*/*.yml
+.shopify
+printer.js
+StarWebPrintTrader.js
+StarWebPrintBuilder.js
+app/components/icons/*
+globals.d.ts
+./**/graphql
+**/*generated*

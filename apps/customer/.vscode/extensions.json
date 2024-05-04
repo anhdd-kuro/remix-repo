@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "graphql.vscode-graphql",
+    "shopify.polaris-for-vscode",
+    "shopify.theme-check-vscode",
+    "bradlc.vscode-tailwindcss",
+    "esbenp.prettier-vscode",
+    "adrianwilczynski.alpine-js-intellisense",
+    "sperovita.alpinejs-syntax-highlight"
+  ]
+}
