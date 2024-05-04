@@ -25,7 +25,7 @@ importers:
         version: 5.0.13(react@18.3.1)
       '@remix-run/dev':
         specifier: 2.9.1
-        version: 2.9.1(@remix-run/react@2.9.1)(@remix-run/serve@2.9.1)(@types/node@20.12.8)(typescript@5.4.5)(vite@5.2.11)
+        version: 2.9.1(@remix-run/react@2.9.1)(@remix-run/serve@2.9.1)(@types/node@20.12.8)(typescript@5.4.5)(vite@5.2.7)
       '@remix-run/node':
         specifier: 2.9.1
         version: 2.9.1(typescript@5.4.5)
@@ -87,11 +87,11 @@ importers:
         specifier: 0.30.0
         version: 0.30.0
       vite:
-        specifier: 5.2.11
-        version: 5.2.11(@types/node@20.12.8)
+        specifier: 5.2.7
+        version: 5.2.7(@types/node@20.12.8)
       vite-tsconfig-paths:
         specifier: 4.3.2
-        version: 4.3.2(typescript@5.4.5)(vite@5.2.11)
+        version: 4.3.2(typescript@5.4.5)(vite@5.2.7)
       zod:
         specifier: 3.23.6
         version: 3.23.6
@@ -3046,7 +3046,7 @@ packages:
       use-sync-external-store: 1.2.2(react@18.3.1)
     dev: false
 
-  /@remix-run/dev@2.9.1(@remix-run/react@2.9.1)(@remix-run/serve@2.9.1)(@types/node@20.12.8)(typescript@5.4.5)(vite@5.2.11):
+  /@remix-run/dev@2.9.1(@remix-run/react@2.9.1)(@remix-run/serve@2.9.1)(@types/node@20.12.8)(typescript@5.4.5)(vite@5.2.7):
     resolution: {integrity: sha512-/YhegnnRrarsqU+11+HdGwjcIT1KgkS9L7kWCM0+ivDvyiBYAuI6xbPG/q/FY6LqLAPYeOxsJmUNl+aj+yMltA==}
     engines: {node: '>=18.0.0'}
     hasBin: true
@@ -3121,7 +3121,7 @@ packages:
       tar-fs: 2.1.1
       tsconfig-paths: 4.2.0
       typescript: 5.4.5
-      vite: 5.2.11(@types/node@20.12.8)
+      vite: 5.2.7(@types/node@20.12.8)
       ws: 7.5.9
     transitivePeerDependencies:
       - '@types/node'
@@ -4394,7 +4394,7 @@ packages:
       react: '*'
       react-dom: '*'
     dependencies:
-      '@remix-run/dev': 2.9.1(@remix-run/react@2.9.1)(@remix-run/serve@2.9.1)(@types/node@20.12.8)(typescript@5.4.5)(vite@5.2.11)
+      '@remix-run/dev': 2.9.1(@remix-run/react@2.9.1)(@remix-run/serve@2.9.1)(@types/node@20.12.8)(typescript@5.4.5)(vite@5.2.7)
       '@remix-run/node': 2.9.1(typescript@5.4.5)
       '@remix-run/server-runtime': 2.9.1(typescript@5.4.5)
       '@vercel/static-config': 3.0.0
@@ -12650,7 +12650,7 @@ packages:
       - terser
     dev: false
 
-  /vite-tsconfig-paths@4.3.2(typescript@5.4.5)(vite@5.2.11):
+  /vite-tsconfig-paths@4.3.2(typescript@5.4.5)(vite@5.2.7):
     resolution: {integrity: sha512-0Vd/a6po6Q+86rPlntHye7F31zA2URZMbH8M3saAZ/xR9QoGN/L21bxEGfXdWmFdNkqPpRdxFT7nmNe12e9/uA==}
     peerDependencies:
       vite: '*'
@@ -12661,7 +12661,7 @@ packages:
       debug: 4.3.4
       globrex: 0.1.2
       tsconfck: 3.0.3(typescript@5.4.5)
-      vite: 5.2.11(@types/node@20.12.8)
+      vite: 5.2.7(@types/node@20.12.8)
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -12703,6 +12703,42 @@ packages:
 
   /vite@5.2.11(@types/node@20.12.8):
     resolution: {integrity: sha512-HndV31LWW05i1BLPMUCE1B9E9GFbOu1MbenhS58FuK6owSO5qHm7GiCotrNY1YE5rMeQSFBGmT5ZaLEjFizgiQ==}
+    engines: {node: ^18.0.0 || >=20.0.0}
+    hasBin: true
+    peerDependencies:
+      '@types/node': ^18.0.0 || >=20.0.0
+      less: '*'
+      lightningcss: ^1.21.0
+      sass: '*'
+      stylus: '*'
+      sugarss: '*'
+      terser: ^5.4.0
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      less:
+        optional: true
+      lightningcss:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
+    dependencies:
+      '@types/node': 20.12.8
+      esbuild: 0.20.2
+      postcss: 8.4.38
+      rollup: 4.17.2
+    optionalDependencies:
+      fsevents: 2.3.3
+    dev: false
+
+  /vite@5.2.7(@types/node@20.12.8):
+    resolution: {integrity: sha512-k14PWOKLI6pMaSzAuGtT+Cf0YmIx12z9YGon39onaJNy8DLBfBJrzg9FQEmkAM5lpHBZs9wksWAsyF/HkpEwJA==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
