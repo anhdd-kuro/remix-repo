@@ -51,8 +51,8 @@ importers:
         specifier: 10.0.0
         version: 10.0.0
       '@shopify/shopify-app-remix':
-        specifier: 2.7.0
-        version: 2.7.0(@remix-run/react@2.8.1)(@shopify/polaris@12.7.0)(react@18.3.1)(typescript@5.4.5)
+        specifier: 2.8.0
+        version: 2.8.0(@remix-run/react@2.8.1)(@shopify/polaris@12.7.0)(react@18.3.1)(typescript@5.4.5)
       '@shopify/shopify-app-session-storage-prisma':
         specifier: 4.0.5
         version: 4.0.5(@prisma/client@5.13.0)(@shopify/shopify-api@10.0.0)(@shopify/shopify-app-session-storage@2.1.5)(prisma@5.13.0)
@@ -3814,8 +3814,8 @@ packages:
       - encoding
     dev: false
 
-  /@shopify/shopify-app-remix@2.7.0(@remix-run/react@2.8.1)(@shopify/polaris@12.7.0)(react@18.3.1)(typescript@5.4.5):
-    resolution: {integrity: sha512-DOZh2qFVntmUfaH1UQIz+C8z+1uTLlC2c1n3VlTs/j64WCzjgfj13fZsNj7ZDr6sv0Fazzr9QNqNOZakhKcLUg==}
+  /@shopify/shopify-app-remix@2.8.0(@remix-run/react@2.8.1)(@shopify/polaris@12.7.0)(react@18.3.1)(typescript@5.4.5):
+    resolution: {integrity: sha512-eaaPbaKWc+Kg5YQNkTLcIR9hp7NR9ECmLVx3WO8sHh0oaXmLS8fF/iOJ9olJh5q4i5Q7oJvFWG2Xx1Wj5m6L+g==}
     peerDependencies:
       '@remix-run/react': '*'
       '@shopify/polaris': '*'
