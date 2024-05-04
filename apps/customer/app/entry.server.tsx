@@ -7,7 +7,6 @@ import { RemixServer } from "@remix-run/react";
 import { isbot } from "isbot";
 import { renderToPipeableStream } from "react-dom/server";
 import { addDocumentResponseHeaders } from "./shopify.server";
-import "./env.server";
 
 const ABORT_DELAY = 5000;
 
