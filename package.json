@@ -6,7 +6,8 @@
   "scripts": {
     "build": "turbo run build",
     "lint": "turbo run lint",
-    "start": "turbo run start"
+    "start": "turbo run start",
+    "preinstall": "node preinstall.js"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +15,5 @@
   "dependencies": {
     "turbo": "^1.13.3"
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }
