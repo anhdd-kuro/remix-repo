@@ -45,14 +45,14 @@ importers:
         specifier: 3.58.2
         version: 3.58.2(@types/node@20.12.8)(typescript@5.4.5)(zod@3.23.6)
       '@shopify/polaris':
-        specifier: 13.2.0
-        version: 13.2.0(react-dom@18.3.1)(react@18.3.1)
+        specifier: 12.7.0
+        version: 12.7.0(react-dom@18.3.1)(react@18.3.1)
       '@shopify/shopify-api':
         specifier: 10.0.0
         version: 10.0.0
       '@shopify/shopify-app-remix':
         specifier: 2.8.2
-        version: 2.8.2(@remix-run/node@2.8.1)(@remix-run/react@2.8.1)(@shopify/polaris@13.2.0)(react@18.3.1)(typescript@5.4.5)
+        version: 2.8.2(@remix-run/node@2.8.1)(@remix-run/react@2.8.1)(@shopify/polaris@12.7.0)(react@18.3.1)(typescript@5.4.5)
       '@shopify/shopify-app-session-storage-prisma':
         specifier: 4.0.5
         version: 4.0.5(@prisma/client@5.13.0)(@shopify/shopify-api@10.0.0)(@shopify/shopify-app-session-storage@2.1.5)(prisma@5.13.0)
@@ -3725,30 +3725,19 @@ packages:
       - utf-8-validate
     dev: false
 
+  /@shopify/polaris-icons@7.13.0:
+    resolution: {integrity: sha512-+KW2GbEDtw0WzfQlslk3Qo76lf609NvK14eBPCMCYkDP16zPfT4ydui1wRqpRPSCaW1oFOnX3A8bNpwKzOVM0Q==}
+    engines: {node: ^16.17.0 || >=18.12.0}
+    dev: false
+
   /@shopify/polaris-icons@8.0.0:
     resolution: {integrity: sha512-NyO/gkBvJfLiIDHywTFRQpwrA+wHHb9xk3uiApArBBB3zluWK1Gos+6zldfXPRZzHSzk2gB6IP2dQDJ2zJmIcg==}
     engines: {node: ^16.17.0 || >=18.12.0}
     dev: false
 
-  /@shopify/polaris-icons@9.0.1(react@18.3.1):
-    resolution: {integrity: sha512-g3V76HcxTXcp6DuKOIWIE08pj95yfzqZw7fnVTGQ1q49PRXTHWh0byDivQCt8wiQPenzWm2pWeme/Ix057nDLw==}
-    engines: {node: '>=20.10.0'}
-    peerDependencies:
-      react: '*'
-    dependencies:
-      react: 18.3.1
-    dev: false
-
   /@shopify/polaris-tokens@8.10.0:
     resolution: {integrity: sha512-y4PDtRbFKGHwA6Lu7a3L4N9SDP6gZv4tw6u0viumtcXcbF0T2j1xPmyuJZNc9c7vmhNSARCg27NGQFpPgxuaEg==}
     engines: {node: ^16.17.0 || >=18.12.0}
-    dependencies:
-      deepmerge: 4.3.1
-    dev: false
-
-  /@shopify/polaris-tokens@9.0.1:
-    resolution: {integrity: sha512-/OYW8HQZ1EuxkF50RCihDVRGi8tnhtpUOsxSKWkX6hVdCOSiYtWPY2sGd3loavKABnm4mhY3pGaA0rcfUg7zEw==}
-    engines: {node: '>=20.10.0'}
     dependencies:
       deepmerge: 4.3.1
     dev: false
@@ -3771,15 +3760,15 @@ packages:
       react-transition-group: 4.4.5(react-dom@18.2.0)(react@18.3.1)
     dev: false
 
-  /@shopify/polaris@13.2.0(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-4InBs5EG6xoxe1ubdsNCYd9XW+Pjlxxaq/xTKBoaWGTBaGuX1gDw5zCPPPBMXcbjL9Bm1JRQYQo8BB6O/Dilng==}
-    engines: {node: '>=20.10.0'}
+  /@shopify/polaris@12.7.0(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-tnC8/7Xdy4Nr+6fCjgDt8lk2C2J74T2eCj//EKmD4JQAne76Vd/nzh8JkdiiKk7JJXJB+vMEIuo4Yv8ogPrt8g==}
+    engines: {node: ^16.17.0 || >=18.12.0}
     peerDependencies:
       react: ^18.0.0
       react-dom: ^18.0.0
     dependencies:
-      '@shopify/polaris-icons': 9.0.1(react@18.3.1)
-      '@shopify/polaris-tokens': 9.0.1
+      '@shopify/polaris-icons': 7.13.0
+      '@shopify/polaris-tokens': 8.10.0
       '@types/react': 18.3.1
       '@types/react-dom': 18.3.0
       '@types/react-transition-group': 4.4.10
@@ -3805,7 +3794,7 @@ packages:
       - encoding
     dev: false
 
-  /@shopify/shopify-app-remix@2.8.2(@remix-run/node@2.8.1)(@remix-run/react@2.8.1)(@shopify/polaris@13.2.0)(react@18.3.1)(typescript@5.4.5):
+  /@shopify/shopify-app-remix@2.8.2(@remix-run/node@2.8.1)(@remix-run/react@2.8.1)(@shopify/polaris@12.7.0)(react@18.3.1)(typescript@5.4.5):
     resolution: {integrity: sha512-gkiF9n4vExuwyrg0pkfMubZzpqdfy3lfs3mFNTluHaKauFLpxTWLeIAT0MiVL/x3r+PmyWJyzxaXf3i1PUyglQ==}
     peerDependencies:
       '@remix-run/node': '*'
@@ -3822,7 +3811,7 @@ packages:
       '@remix-run/react': 2.8.1(react-dom@18.3.1)(react@18.3.1)(typescript@5.4.5)
       '@remix-run/server-runtime': 2.9.1(typescript@5.4.5)
       '@shopify/admin-api-client': 0.2.9
-      '@shopify/polaris': 13.2.0(react-dom@18.3.1)(react@18.3.1)
+      '@shopify/polaris': 12.7.0(react-dom@18.3.1)(react@18.3.1)
       '@shopify/shopify-api': 10.0.0
       '@shopify/shopify-app-session-storage': 2.1.5(@shopify/shopify-api@10.0.0)
       '@shopify/storefront-api-client': 0.3.4
